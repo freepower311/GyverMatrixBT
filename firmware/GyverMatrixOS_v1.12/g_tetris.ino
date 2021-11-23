@@ -215,8 +215,11 @@ void gameOverTetris() {
   FastLED.show();
 
   // тут можно вывести счёт lineCleanCounter
-  if (!gameDemo) displayScore(lineCleanCounter);
-  delay(1000);
+  if (!gameDemo)
+  {
+    displayScore(lineCleanCounter);
+    delay(1000);
+  }
   lineCleanCounter = 0;   // сброс счёта
   FastLED.clear();
   FastLED.show();

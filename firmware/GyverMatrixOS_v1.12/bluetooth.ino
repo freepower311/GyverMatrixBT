@@ -18,6 +18,7 @@ uint32_t prevColor;
 boolean recievedFlag;
 byte lastMode = 0;
 boolean parseStarted;
+boolean resetIdleMode = false;
 
 void bluetoothRoutine() {
   parsing();                           // принимаем данные
@@ -139,7 +140,7 @@ void parsing() {
   if (recievedFlag) {      // если получены данные
     recievedFlag = false;
 
-    if (intData[0] != 16) {
+    if (intData[0] != 16 && intData[0] != 17) {
       idleTimer.reset();
       idleState = false;
 
@@ -152,6 +153,9 @@ void parsing() {
 
     switch (intData[0]) {
       case 1:
+        runningFlag = false;
+        gameFlag = false;
+        effectsFlag = false;
         drawPixelXY(intData[1], intData[2], gammaCorrection(globalColor));
         FastLED.show();
         break;
@@ -235,16 +239,46 @@ void parsing() {
         if (runningFlag) scrollTimer.setInterval(globalSpeed);
         break;
       case 16:
+        resetIdleMode = true;
         if (intData[1] == 0) AUTOPLAY = true;
         else if (intData[1] == 1) AUTOPLAY = false;
-        else if (intData[1] == 2) prevMode();
-        else if (intData[1] == 3) nextMode();
+        else if (intData[1] == 2)
+        {
+          prevMode();
+          autoplayTimer = millis();
+        }
+        else if (intData[1] == 3)
+        {
+          nextMode();
+          autoplayTimer = millis();
+        }
+        
         break;
       case 17: autoplayTime = ((long)intData[1] * 1000);
+        resetIdleMode = true;
         autoplayTimer = millis();
         break;
     }
     lastMode = intData[0];  // запомнить предыдущий режим
+
+    if(resetIdleMode)
+    {
+      resetIdleMode = false;
+      if(!idleState)
+      {
+        idleState = true;
+        autoplayTimer = millis();
+        gameDemo = true;
+  
+        gameSpeed = DEMO_GAME_SPEED;
+        gameTimer.setInterval(gameSpeed);
+  
+        loadingFlag = true;
+        BTcontrol = false;
+        FastLED.clear();
+        FastLED.show();
+      }
+    }
   }
 
   // ****************** ПАРСИНГ *****************

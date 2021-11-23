@@ -103,21 +103,24 @@ void snakeRoutine() {
   if (pizdetc) {
     pizdetc = false;
 
-    // ну в общем плавно моргнуть, типо змейке "больно"
-    for (byte bright = 0; bright < 15; bright++) {
-      FastLED.setBrightness(bright);
-      for (int i = 0; i < NUM_LEDS; i++) {
-        leds[i] = CRGB::Red;
+    if (!gameDemo)
+    {
+      // ну в общем плавно моргнуть, типо змейке "больно"
+      for (byte bright = 0; bright < 15; bright++) {
+        FastLED.setBrightness(bright);
+        for (int i = 0; i < NUM_LEDS; i++) {
+          leds[i] = CRGB::Red;
+        }
+        FastLED.show();
+        delay(10);
       }
+      delay(100);
+      FastLED.clear();
       FastLED.show();
-      delay(10);
+      FastLED.setBrightness(BRIGHTNESS);
+      displayScore(snakeLength - START_LENGTH);
+      delay(1000);
     }
-    delay(100);
-    FastLED.clear();
-    FastLED.show();
-    FastLED.setBrightness(BRIGHTNESS);
-    displayScore(snakeLength - START_LENGTH);
-    delay(1000);
     FastLED.clear();
     FastLED.show();
     newGameSnake();                          // миша, всё ху.я, давай по новой
