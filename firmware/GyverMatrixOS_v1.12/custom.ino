@@ -62,7 +62,7 @@
 //  break;
 
 // не забудьте указать количество режимов для корректного переключения с последнего на первый
-#define MODES_AMOUNT 20   // количество кастомных режимов (которые переключаются сами или кнопкой)
+#define MODES_AMOUNT 19   // количество кастомных режимов (которые переключаются сами или кнопкой)
 
 void customModes() {
   switch (thisMode) {
@@ -105,8 +105,8 @@ void customModes() {
       break;
     case 18: tetrisRoutine();
       break;
-    case 19: arkanoidRoutine();
-      break;
+//    case 19: arkanoidRoutine();
+//      break;
   }
 
 }

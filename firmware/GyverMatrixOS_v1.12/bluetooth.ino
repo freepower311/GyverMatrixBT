@@ -323,6 +323,11 @@ void parsing() {
       parseMode == NORMAL;
       parseStarted = false;                     // сброс
       recievedFlag = true;                    // флаг на принятие
+#if (DEBUG != 0)
+      Serial.print(F("Accept "));
+      Serial.print(intData[0]);
+      Serial.println();
+#endif
     }
   }
 }

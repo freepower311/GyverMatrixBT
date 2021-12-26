@@ -228,7 +228,7 @@ void gameOverTetris() {
 
 // новый раунд
 void newGameTetris() {
-  Serial.println("lolkek");   // без этого работает некорректно! магия ебаная
+  //Serial.println("lolkek");   // без этого работает некорректно! магия ебаная. (вот и проверим)
   delay(10);
   buttons = 4;
   height = HEIGHT;    // высота = высоте матрицы
