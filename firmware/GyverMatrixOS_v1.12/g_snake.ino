@@ -103,18 +103,23 @@ void snakeRoutine() {
   if (pizdetc) {
     pizdetc = false;
 
+    drawPixelXY(headX, headY, CRGB::Red);
+    drawPixelXY(headX - vectorX, headY - vectorY, CRGB::Red);
+    FastLED.show();
+    delay(500);
+
     if (!gameDemo)
     {
       // ну в общем плавно моргнуть, типо змейке "больно"
-      for (byte bright = 0; bright < 15; bright++) {
-        FastLED.setBrightness(bright);
-        for (int i = 0; i < NUM_LEDS; i++) {
-          leds[i] = CRGB::Red;
-        }
-        FastLED.show();
-        delay(10);
-      }
-      delay(100);
+//      for (byte bright = 0; bright < 15; bright++) {
+//        FastLED.setBrightness(bright);
+//        for (int i = 0; i < NUM_LEDS; i++) {
+//          leds[i] = CRGB::Red;
+//        }
+//        FastLED.show();
+//        delay(10);
+//      }
+
       FastLED.clear();
       FastLED.show();
       FastLED.setBrightness(BRIGHTNESS);
@@ -131,26 +136,7 @@ void snakeDemo() {
   // смещение головы змеи
   int8_t nextX = headX + vectorX;
   int8_t nextY = headY + vectorY;
-
-  // ищем яблоко
-  if (headX == appleX) {                // яблоко на одной линии по вертикали
-    if (headY < appleY) buttons = 0;
-    if (headY > appleY) buttons = 2;
-  }
-  if (headY == appleY) {                // яблоко на одной линии по горизонтали
-    if (headX < appleX) buttons = 1;
-    if (headX > appleX) buttons = 3;
-  }
-
-  if (getPixColorXY(nextX, nextY) == GLOBAL_COLOR_1) {   // проверка на столкновение с собой
-    // поворачиваем налево
-    if (vectorX > 0) buttons = 0;
-    if (vectorX < 0) buttons = 2;
-    if (vectorY > 0) buttons = 3;
-    if (vectorY < 0) buttons = 1;
-    return;
-  }
-
+  
   if (nextX < 0 || nextX > WIDTH - 1 || nextY < 0        // проверка на столкновение со стеной
       || nextY > HEIGHT - 1) {
 
@@ -166,6 +152,42 @@ void snakeDemo() {
 
     if (vectorY < 0 && headX == 0) buttons = 1;
     if (vectorY < 0) buttons = 3;
+    return;
+  }
+
+  if (getPixColorXY(nextX, nextY) == GLOBAL_COLOR_1) {   // проверка на столкновение с собой
+    // поворачиваем налево
+    if(vectorX < 0)
+    {
+      if(getPixColorXY(headX, headY - 1) != GLOBAL_COLOR_1 && headY - 1 >= 0) buttons = 2;
+      else if(getPixColorXY(headX + 1, headY) != GLOBAL_COLOR_1 && headX + 1 < WIDTH)buttons = 1;
+    }
+    if(vectorX > 0)
+    {
+      if(getPixColorXY(headX, headY + 1) != GLOBAL_COLOR_1 && headY + 1 < HEIGHT) buttons = 0;
+      else if(getPixColorXY(headX, headY - 1) != GLOBAL_COLOR_1 && headY - 1 >= 0) buttons = 2;
+    }
+    if(vectorY < 0)
+    {
+      if(getPixColorXY(headX + 1, headY) != GLOBAL_COLOR_1 && headX + 1 < WIDTH)buttons = 1;
+      else if(getPixColorXY(headX - 1, headY) != GLOBAL_COLOR_1 && headX - 1 >= 0) buttons = 3;
+    }
+    if(vectorY > 0)
+    {
+      if(getPixColorXY(headX - 1, headY) != GLOBAL_COLOR_1 && headX - 1 >= 0) buttons = 3;
+      else if(getPixColorXY(headX + 1, headY) != GLOBAL_COLOR_1 && headX + 1 < WIDTH)buttons = 1;
+    }
+    return;
+  }
+
+  // ищем яблоко
+  if (headX == appleX) {                // яблоко на одной линии по вертикали
+    if (headY < appleY && vectorY >= 0 && getPixColorXY(headX, headY + 1) != GLOBAL_COLOR_1) buttons = 0;
+    if (headY > appleY && vectorY <= 0 && getPixColorXY(headX, headY - 1) != GLOBAL_COLOR_1) buttons = 2;
+  }
+  if (headY == appleY) {                // яблоко на одной линии по горизонтали
+    if (headX < appleX && vectorX >= 0 && getPixColorXY(headX + 1, headY) != GLOBAL_COLOR_1) buttons = 1;
+    if (headX > appleX && vectorX <= 0 && getPixColorXY(headX - 1, headY) != GLOBAL_COLOR_1) buttons = 3;
   }
 }
 
