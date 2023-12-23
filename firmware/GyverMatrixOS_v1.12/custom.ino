@@ -62,83 +62,40 @@
 //  break;
 
 // не забудьте указать количество режимов для корректного переключения с последнего на первый
-#define MODES_AMOUNT 35   // количество кастомных режимов (которые переключаются сами или кнопкой)
+#define MODES_AMOUNT 29   // количество кастомных режимов (которые переключаются сами или кнопкой)
 
 void customModes() {
   switch (thisMode) {
-    case 0: fillString("С НОВЫМ ГОДОМ !", 1);
-      break;
-    case 1: cloudNoise();
-      break;
-    case 2: fillString("2022", 2);
-      break;
-    case 3: lavaNoise();
-      break;
-    case 4: fillString("С НОВЫМ ГОДОМ !", 255);
-      break;
-    case 5: plasmaNoise();
-      break;
-    case 6: fillString("2022", 255255255);
-      break;
-    case 7: rainbowNoise();
-      break;
-    case 8: fillString("С НОВЫМ ГОДОМ !", 255000255);
-      break;
-    case 9: rainbowStripeNoise();
-      break;
-    case 10: fillString("2022", 255255000);
-      break;
-    case 11: zebraNoise();
-      break;
-    case 12: fillString("С НОВЫМ ГОДОМ !", 255000000);
-      break;
-    case 13: forestNoise();
-      break;
-    case 14: fillString("2022", 255000);
-      break;
-    case 15: oceanNoise();
-      break;
-    case 16: fillString("С НОВЫМ ГОДОМ !", 255255);
-      break;
-    case 17: snowRoutine();
-      break;
-    case 18: fillString("2022", 255125125);
-      break;
-    case 19: sparklesRoutine();
-      break;
-    case 20: fillString("С НОВЫМ ГОДОМ !", 125255000);
-      break;
-    case 21: matrixRoutine();
-      break;
-    case 22: fillString("2022", 255000125);
-      break;
-    case 23: starfallRoutine();
-      break;
-    case 24: fillString("С НОВЫМ ГОДОМ !", 125255);
-      break;
-    case 25: ballsRoutine();
-      break;
-    case 26: fillString("2022", 25550);
-      break;
-    case 27: rainbowRoutine();
-      break;
-    case 28: fillString("С НОВЫМ ГОДОМ !", 255010200);
-      break;
-    case 29: fireRoutine();
-      break;
-    case 30: fillString("2022", 200200000);
-      break;
-    case 31: snakeRoutine();
-      break;
-    case 32: fillString("С НОВЫМ ГОДОМ !", 233033);
-      break;
-    case 33: tetrisRoutine();
-      break;
-    case 34: fillString("2022", 880990150);
-      break;
+    case 0: fillString("2023", 2); break;
+    case 1: snowRoutine(); break;
+    case 2: ballsRoutine(); break;
+    case 3: fillString("2023", 2); break;
+    case 4: oceanNoise(); break;
+    case 5: sparklesRoutine(); break;
+    case 6: fillString("2023", 2); break;
+    case 7: cloudNoise(); break;
+    case 8: matrixRoutine(); break;
+    case 9: fillString("2023", 2); break;
+    case 10: lavaNoise(); break;
+    case 11: starfallRoutine(); break;
+    case 12: fillString("2023", 2); break;
+    case 13: snowRoutine(); break;
+    case 14: rainbowNoise(); break;
+    case 15: fillString("2023", 2); break;
+    case 16: snakeRoutine(); break;
+    case 17: rainbowStripeNoise(); break;
+    case 18: fillString("2023", 2); break;
+    case 19: plasmaNoise(); break;
+    case 20: zebraNoise(); break;
+    case 21: fillString("2023", 2); break;
+    case 22: forestNoise(); break;
+    case 23: snowRoutine(); break;
+    case 24: fillString("2023", 2); break;
+    case 25: rainbowRoutine(); break;
+    case 26: tetrisRoutine(); break;
+    case 27: fillString("2023", 2); break;
+    case 28: fireRoutine(); break;
   }
-
-
 
 }
 
